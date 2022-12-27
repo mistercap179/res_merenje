@@ -17,11 +17,15 @@ namespace Models
     public class Merenje
     {
         [DataMember]
+        public int IdMerenja { get; set; }
+        [DataMember]
         public MerenjeTip Tip { get; set; }
         [DataMember]
         public int IdMerenja { get; set; }
         [DataMember]
         public int IdDb { get; set; }
+        [DataMember]
+        public int IdDevice { get; set; }
         [DataMember]
         public double Vrednost { get; set; }
         [DataMember]
@@ -35,4 +39,5 @@ namespace Models
             ";
         }
     }
+
 }

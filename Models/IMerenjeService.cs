@@ -11,7 +11,21 @@ namespace Models
     public interface IMerenjeService
     {
         [OperationContract]
-        ICollection<Models.Merenje> GetMerenjes();
+        Models.Merenje getById(int id);
+
+        [OperationContract]
+        double getAzuriranuVrednost(int id);
+
+        [OperationContract]
+        List<double?> getVrednosti();
+        
+        [OperationContract]
+        List<Merenje> getAnalogni();
+
+        [OperationContract]
+        List<Merenje> getDigitalni();
+
+
     }
 
 }
