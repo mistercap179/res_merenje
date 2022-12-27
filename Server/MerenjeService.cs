@@ -9,24 +9,152 @@ using System.Threading.Tasks;
 namespace Server
 {
 
+
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
-    public class MerenjeService : IMerenjeService
+    public class MerenjeService : IMerenjeService,IWrite
     {
+        public Conversion conversion = new Conversion();
+
         [OperationBehavior]
-        public ICollection<Models.Merenje> GetMerenjes()
+        public Models.Merenje getById(int id)
         {
-            using (var db = new MerenjeResEntities())
+            Models.Merenje merenje = new Models.Merenje();
+
+            try
             {
-                return db.Merenjes.ToList().Select(x =>
+                using (var db = new MerenjeEntities())
                 {
-                    return new Models.Merenje()
+                    merenje = conversion.ConversionMerenje(db.Merenjes.Where(x => x.idMerenja == id).FirstOrDefault());
+                }
+            }
+            catch(Exception ex)
+            {
+               Console.WriteLine(ex.Message);
+            }
+       
+            return merenje;
+
+        }
+
+        [OperationBehavior]
+        public double getAzuriranuVrednost(int id)
+        {
+            try
+            {
+                using (var db = new MerenjeEntities())
+                {
+                    Models.Merenje merenje = new Models.Merenje();
+                    double vrednost;
+                    long maxTimestamp = db.Merenjes.Where(x => x.idMerenja == id).Max(x=>x.timestamp);
+                    merenje = conversion.ConversionMerenje(db.Merenjes.Where(x => x.idMerenja == id && x.timestamp == maxTimestamp).FirstOrDefault());
+                    return vrednost = merenje.Vrednost;
+                }
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return 0;
+            }
+           
+        }
+
+        [OperationBehavior]
+        public List<double?> getVrednosti()
+        {
+            List<double?> listaV = new List<double?>();
+            try
+            {
+                using (var db = new MerenjeEntities())
+                {
+                    db.Merenjes.Select(x => x.idDevice)
+                        .ToList()
+                        .ForEach(idm => 
                     {
-                        Id = (int)x.id,
-                        Timestamp = x.timestamp,
-                        Tip = (MerenjeTip)x.tip,
-                        Vrednost = (double)x.vrednost
-                    };
-                }).ToList();
+                        var val = db.Merenjes.Where(m => m.idDevice == idm)
+                                             .OrderByDescending(m => m.timestamp).FirstOrDefault();
+                        listaV.Add(val.vrednost);
+                    });
+
+                    return listaV;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return listaV;
+            }
+
+        }
+
+        [OperationBehavior]
+        public List<Models.Merenje> getAnalogni()
+        {
+            List<Models.Merenje> listaA = new List<Models.Merenje>();
+            try
+            {
+                using (var db = new MerenjeEntities())
+                {
+                    db.Merenjes.Where(m => m.tip == ((int)MerenjeTip.ANALOGNO)).ToList()
+                           .ForEach(x =>
+                           {
+                               listaA.Add(conversion.ConversionMerenje(x));
+
+                           });
+
+                    return listaA;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return listaA;
+            }
+        }
+
+
+        [OperationBehavior]
+        public List<Models.Merenje> getDigitalni()
+        {
+            List<Models.Merenje> listaD = new List<Models.Merenje>();
+            try
+            {
+                using (var db = new MerenjeEntities())
+                {
+                    db.Merenjes.Where(m => m.tip == ((int)MerenjeTip.DIGITALNO)).ToList()
+                           .ForEach(x =>
+                           {
+                               listaD.Add(conversion.ConversionMerenje(x));
+
+                           });
+
+                    return listaD;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return listaD;
+            }
+        }
+
+        public void writeDevice(Models.Merenje merenje)
+        {
+            try
+            {
+                using (var db = new MerenjeEntities())
+                {
+                    db.Merenjes.Add(new Merenje()
+                    {
+                        idMerenja = merenje.IdMerenja,
+                        timestamp = merenje.Timestamp,
+                        tip = (int)merenje.Tip,
+                        vrednost = merenje.Vrednost
+                    });
+                }
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
             }
 
         }
