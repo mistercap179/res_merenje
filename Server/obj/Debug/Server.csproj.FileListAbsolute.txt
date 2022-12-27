@@ -1,0 +1,14 @@
+D:\res_merenje\res_merenje\Server\obj\Debug\Server.csprojAssemblyReference.cache
+D:\res_merenje\res_merenje\Server\obj\Debug\Server.csproj.CoreCompileInputs.cache
+D:\res_merenje\res_merenje\Server\bin\Debug\Server.exe.config
+D:\res_merenje\res_merenje\Server\bin\Debug\Server.exe
+D:\res_merenje\res_merenje\Server\bin\Debug\Server.pdb
+D:\res_merenje\res_merenje\Server\bin\Debug\EntityFramework.dll
+D:\res_merenje\res_merenje\Server\bin\Debug\EntityFramework.SqlServer.dll
+D:\res_merenje\res_merenje\Server\bin\Debug\Models.dll
+D:\res_merenje\res_merenje\Server\bin\Debug\Models.pdb
+D:\res_merenje\res_merenje\Server\bin\Debug\EntityFramework.xml
+D:\res_merenje\res_merenje\Server\bin\Debug\EntityFramework.SqlServer.xml
+D:\res_merenje\res_merenje\Server\obj\Debug\Server.csproj.CopyComplete
+D:\res_merenje\res_merenje\Server\obj\Debug\Server.exe
+D:\res_merenje\res_merenje\Server\obj\Debug\Server.pdb

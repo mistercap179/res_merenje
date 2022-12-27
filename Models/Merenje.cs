@@ -19,7 +19,9 @@ namespace Models
         [DataMember]
         public MerenjeTip Tip { get; set; }
         [DataMember]
-        public int Id { get; set; }
+        public int IdMerenja { get; set; }
+        [DataMember]
+        public int IdDb { get; set; }
         [DataMember]
         public double Vrednost { get; set; }
         [DataMember]
@@ -28,7 +30,7 @@ namespace Models
         public override string ToString()
         {
             return $@"
-            Merenje {Id} 
+            Merenje {IdMerenja} 
             Timestamp: {Timestamp}, Vrednost: {Vrednost}, Tip: {Tip.ToString()}
             ";
         }

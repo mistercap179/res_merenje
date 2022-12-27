@@ -56,12 +56,38 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Merenje.cs">
+      <DependentUpon>MerenjeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MerenjeModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MerenjeModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MerenjeModel.cs" />
+    <Compile Include="MerenjeModel.Designer.cs">
+      <DependentUpon>MerenjeModel.edmx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="MerenjeModel1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MerenjeModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="MerenjeService.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <EntityDeploy Include="MerenjeModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>MerenjeModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="MerenjeModel.edmx.diagram">
+      <DependentUpon>MerenjeModel.edmx</DependentUpon>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -72,6 +98,16 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="MerenjeModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>MerenjeModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="MerenjeModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>MerenjeModel1.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

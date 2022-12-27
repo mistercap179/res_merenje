@@ -12,24 +12,10 @@ namespace Proxy
     {
         static void Main(string[] args)
         {
-
-
-
-
-
-
-
-
             Console.WriteLine("Proxy se digao");
 
-            const short serverPort = 1234;
-            var uri = $"net.tcp://localhost:{serverPort}/MerenjeService";
-
-            NetTcpBinding binding = new NetTcpBinding(SecurityMode.None);
-            var channel = new ChannelFactory<IMerenjeService>(binding);
-            var endpoint = new EndpointAddress(uri);
-            var proxy = channel.CreateChannel(endpoint);
-            var res = proxy.GetMerenjes();
+            Models.Konekcije.KlijentKonekcija konekcija = new Models.Konekcije.KlijentKonekcija(Models.Konekcije.Konekcija.UriServer);
+            var res = konekcija.Service.GetMerenjes();
             Console.WriteLine("Received:");
             res.ToList().ForEach(x => Console.WriteLine(x));
             Console.ReadLine();

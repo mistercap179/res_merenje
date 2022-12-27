@@ -1,0 +1,6 @@
+D:\res_merenje\res_merenje\Models\bin\Debug\Models.dll
+D:\res_merenje\res_merenje\Models\bin\Debug\Models.pdb
+D:\res_merenje\res_merenje\Models\obj\Debug\Models.csprojAssemblyReference.cache
+D:\res_merenje\res_merenje\Models\obj\Debug\Models.csproj.CoreCompileInputs.cache
+D:\res_merenje\res_merenje\Models\obj\Debug\Models.dll
+D:\res_merenje\res_merenje\Models\obj\Debug\Models.pdb

@@ -15,13 +15,14 @@ namespace Server
         [OperationBehavior]
         public ICollection<Models.Merenje> GetMerenjes()
         {
-            using (var db = new MerenjeResEntities())
+            using (var db = new MerenjeEntities())
             {
                 return db.Merenjes.ToList().Select(x =>
                 {
                     return new Models.Merenje()
                     {
-                        Id = (int)x.id,
+                        IdDb = (int)x.idDb,
+                        IdMerenja = (int)x.idMerenja,
                         Timestamp = x.timestamp,
                         Tip = (MerenjeTip)x.tip,
                         Vrednost = (double)x.vrednost

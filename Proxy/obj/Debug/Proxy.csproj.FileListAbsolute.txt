@@ -1,0 +1,10 @@
+D:\res_merenje\res_merenje\Proxy\bin\Debug\Proxy.exe.config
+D:\res_merenje\res_merenje\Proxy\bin\Debug\Proxy.exe
+D:\res_merenje\res_merenje\Proxy\bin\Debug\Proxy.pdb
+D:\res_merenje\res_merenje\Proxy\bin\Debug\Models.dll
+D:\res_merenje\res_merenje\Proxy\bin\Debug\Models.pdb
+D:\res_merenje\res_merenje\Proxy\obj\Debug\Proxy.csprojAssemblyReference.cache
+D:\res_merenje\res_merenje\Proxy\obj\Debug\Proxy.csproj.CoreCompileInputs.cache
+D:\res_merenje\res_merenje\Proxy\obj\Debug\Proxy.csproj.CopyComplete
+D:\res_merenje\res_merenje\Proxy\obj\Debug\Proxy.exe
+D:\res_merenje\res_merenje\Proxy\obj\Debug\Proxy.pdb

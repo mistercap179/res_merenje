@@ -12,23 +12,12 @@ namespace Server
     {
         static void Main(string[] args)
         {
-            const short serverPort = 1234;
-            var uris = new Uri[]
-            {
-                new Uri($"net.tcp://localhost:{serverPort}/MerenjeService")
-            };
-            IMerenjeService service = new MerenjeService();
-            ServiceHost host = new ServiceHost(service, uris);
-            var binding = new NetTcpBinding(SecurityMode.None);
-            host.AddServiceEndpoint(typeof(IMerenjeService), binding, "");
-            host.Opened += HostOpened;
-            host.Open();
+            Models.Konekcije.ServerKonekcija konekcija = new Models.Konekcije.ServerKonekcija(
+                new string[] { Models.Konekcije.Konekcija.UriServer }, new MerenjeService()
+            );
+            konekcija.Open();
             Console.ReadLine();
         }
-
-        private static void HostOpened(object sender, EventArgs e)
-        {
-            Console.WriteLine("Digao se server");
-        }
     }
+
 }
