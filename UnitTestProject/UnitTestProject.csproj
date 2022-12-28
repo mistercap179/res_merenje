@@ -66,6 +66,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ProxyTesting.cs" />
     <Compile Include="UnitTestServer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -73,14 +74,25 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Device\Device.csproj">
+      <Project>{f25ab900-d882-4e80-a9c6-cc7a4b6e81c1}</Project>
+      <Name>Device</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Models\Models.csproj">
       <Project>{63D658F2-4AF3-47DA-892C-D0C472704C20}</Project>
       <Name>Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Proxy\Proxy.csproj">
+      <Project>{9eb082ee-9a7d-43b6-9902-1480519db2af}</Project>
+      <Name>Proxy</Name>
     </ProjectReference>
     <ProjectReference Include="..\Server\Server.csproj">
       <Project>{5B596AF6-55DC-4518-B4F9-DD3998AE7B8A}</Project>
       <Name>Server</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

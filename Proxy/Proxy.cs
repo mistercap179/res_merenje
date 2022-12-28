@@ -7,49 +7,58 @@ using System.Threading.Tasks;
 
 namespace Proxy
 {
-    class Proxy
+    public class ProxyInput
     {
-        List<Task> ProxyTasks = new List<Task>();
-        public bool ProxyWorking = false;
-        Models.Konekcije.ServerKonekcija<IMerenjeService> KonekcijaProxyAsServer = null;
-        Models.Konekcije.KlijentKonekcija<IServerMerenjeService> KonekcijaProxyAsClient = null;
-        IProxyService ProxyService = null;
-        public Proxy()
-        {}
+        public virtual void ReadLine()
+        {
+            Console.ReadLine();
+        }
+    }
+
+    public class Proxy
+    {
+        public List<Task> ProxyTasks { get; private set; } = new List<Task>();
+        public bool ProxyWorking { get; private set; } = false;
+        public Models.Konekcije.ServerKonekcija<IMerenjeService> KonekcijaProxyAsServer { get; private set; } = null;
+        public Models.Konekcije.IKonekcija<IServerMerenjeService> KonekcijaProxyAsClient { get; private set; } = null;
+        public IProxyService ProxyService { get; private set; } = null;
+        private ProxyInput Input { get; set; }
+        public Proxy(
+            Models.Konekcije.ServerKonekcija<IMerenjeService> konekcijaProxyAsServer,
+            Models.Konekcije.IKonekcija<IServerMerenjeService> konekcijaProxyAsClient,
+            ProxyInput proxyInput
+            )
+        {
+            KonekcijaProxyAsServer = konekcijaProxyAsServer;
+            KonekcijaProxyAsClient = konekcijaProxyAsClient;
+            ProxyService = new ProxyService(KonekcijaProxyAsClient.Service);
+            Input = proxyInput;
+        }
 
         public void StartProxy()
         {
             ProxyWorking = true;
-            StartProxyServices();
         }
 
         /// <summary>
         /// Otvara servise proksija
         /// </summary>
-        private void StartProxyServices()
+        public void StartProxyServices()
         {
-            KonekcijaProxyAsClient = new Models.Konekcije.KlijentKonekcija<IServerMerenjeService>(
-                Models.Konekcije.Konekcija.UriServer
-            );
-
-            ProxyService = new ProxyService(KonekcijaProxyAsClient.Service);
-
-            KonekcijaProxyAsServer = new Models.Konekcije.ServerKonekcija<IMerenjeService>(
-                new string[] { Models.Konekcije.Konekcija.UriProxyServer }, ProxyService);
-
             ProxyTasks.Add(Task.Factory.StartNew(() => CheckRemovals()));
             KonekcijaProxyAsServer.Open();
-            Console.ReadLine();
+            Input.ReadLine();
             ProxyWorking = false;
             Task.WaitAll(ProxyTasks.ToArray());
         }
-
+    
+        public int secondsToSleep { get; set; } = 10;
         /// <summary>
         /// Pokrece task koji ce proveravati da li se treba brisati u lokalnoj kopiji
         /// </summary>
         private void CheckRemovals()
         {
-            int secondsToSleep = 10;
+            
 
             while (ProxyWorking)
             {

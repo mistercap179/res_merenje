@@ -12,6 +12,7 @@ namespace Models.Konekcije
         List<Uri> Uris = new List<Uri>();
         ServiceHost Host = null;
         NetTcpBinding Binding = null;
+        public ServerKonekcija() : base() { }
         public ServerKonekcija(string[] uris, T service) : base()
         {
             try
@@ -36,6 +37,11 @@ namespace Models.Konekcije
         private void Host_Opened(object sender, EventArgs e)
         {
             Console.WriteLine("Server started.");
+        }
+
+        public bool IsOpen()
+        {
+            return Host.State == CommunicationState.Opened;
         }
 
         public void Open()

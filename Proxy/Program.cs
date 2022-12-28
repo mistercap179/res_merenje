@@ -12,10 +12,19 @@ namespace Proxy
     {
         static void Main(string[] args)
         {
+            var KonekcijaProxyAsClient = new Models.Konekcije.KlijentKonekcija<IServerMerenjeService>(
+                Models.Konekcije.Konekcija.UriServer
+            );
+
+            var ProxyService = new ProxyService(KonekcijaProxyAsClient.Service);
+
+            var KonekcijaProxyAsServer = new Models.Konekcije.ServerKonekcija<IMerenjeService>(
+                new string[] { Models.Konekcije.Konekcija.UriProxyServer }, ProxyService);
+
             Console.WriteLine("Proxy se digao");
-            Proxy proxy = new Proxy();
+            Proxy proxy = new Proxy(KonekcijaProxyAsServer, KonekcijaProxyAsClient, new ProxyInput());
             proxy.StartProxy();
-            
+            proxy.StartProxyServices();
         }
     }
 }

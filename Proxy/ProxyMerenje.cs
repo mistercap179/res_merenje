@@ -9,7 +9,7 @@ namespace Proxy
     /// <summary>
     /// 
     /// </summary>
-    class ProxyMerenje 
+    public class ProxyMerenje 
     {
         public Models.Merenje MerenjeInfo { get; set; }
         public DateTime PoslednjiPutDobavljeno { get; set; }

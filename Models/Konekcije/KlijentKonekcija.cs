@@ -12,6 +12,7 @@ namespace Models.Konekcije
         NetTcpBinding Binding { get; set; } = null;
         ChannelFactory<T> Channel { get; set; } = null;
         EndpointAddress EndpointAddress { get; set; } = null;
+        public KlijentKonekcija(): base() { }
         public KlijentKonekcija(string uri) : base()
         {
             try

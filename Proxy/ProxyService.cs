@@ -9,14 +9,14 @@ using System.Threading.Tasks;
 namespace Proxy
 {
     [ServiceContract]
-    interface IProxyService : Models.IMerenjeService 
+    public interface IProxyService : Models.IMerenjeService 
     {
         [OperationContract]
         void CheckRemovals();
     }
 
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
-    class ProxyService : IProxyService
+    public class ProxyService : IProxyService
     {
         Models.IServerMerenjeService ServerService = null;
         private List<ProxyMerenje> LocalStorage = new List<ProxyMerenje>();
@@ -25,6 +25,23 @@ namespace Proxy
         {
             ServerService = serverService;
         }
+
+        public List<ProxyMerenje> GetLocalStorage()
+        {
+            lock (LocalStorage)
+            {
+                return LocalStorage;
+            }
+        }
+
+        public void SetLocalStorage(List<ProxyMerenje> merenja)
+        {
+            lock (LocalStorage)
+            {
+                LocalStorage = merenja;
+            }
+        }
+
 
         [OperationBehavior]
         public void CheckRemovals()
@@ -35,7 +52,7 @@ namespace Proxy
             }
         }
 
-        private void UpdateLocalStorageWithNewMerenje(Models.Merenje merenje)
+        public void UpdateLocalStorageWithNewMerenje(Models.Merenje merenje)
         {
             lock (LocalStorage)
             {
@@ -61,7 +78,10 @@ namespace Proxy
                 ProxyMerenje local = null;
                 lock (LocalStorage)
                 {
-                    local = LocalStorage.Find(x => x.MerenjeInfo.IdDb == id);
+                    if (LocalStorage.Count(x => x.MerenjeInfo.IdDb == id) > 0)
+                    {
+                        local = LocalStorage.Find(x => x.MerenjeInfo.IdDb == id);
+                    }
                 }
 
                 if (local != null)
@@ -106,10 +126,13 @@ namespace Proxy
                 ProxyMerenje localLastInstance = null;
                 lock (LocalStorage)
                 {
-                    localLastInstance = LocalStorage
-                        .Where(x => x.MerenjeInfo.IdMerenja == id)
-                        .OrderByDescending(x => x.MerenjeInfo.Timestamp)
-                        .FirstOrDefault();
+                    if (LocalStorage.Where(x => x.MerenjeInfo.IdMerenja == id).Count() > 0)
+                    {
+                        localLastInstance = LocalStorage
+                            .Where(x => x.MerenjeInfo.IdMerenja == id)
+                            .OrderByDescending(x => x.MerenjeInfo.Timestamp)
+                            .FirstOrDefault();
+                    }
                 }
 
                 if (localLastInstance != null)
@@ -130,12 +153,11 @@ namespace Proxy
                 else
                 {
                     // TO DO: Get Last merenje object by id
-                    var newMerenje = ServerService.GetLastMerenjeFromIdMerenje(localLastInstance.MerenjeInfo.IdMerenja);
+                    var newMerenje = ServerService.GetLastMerenjeFromIdMerenje(id);
                     UpdateLocalStorageWithNewMerenje(newMerenje);
                     // we need new value from db
                     return newMerenje.Vrednost;
                 }
-
             }
             catch (Exception e)
             {
@@ -156,10 +178,13 @@ namespace Proxy
                 ProxyMerenje lastValueForDevice = null;
                 lock (LocalStorage)
                 {
-                    lastValueForDevice = LocalStorage
-                        .Where(x => x.MerenjeInfo.IdDevice == kv.Key)
-                        .OrderByDescending(x => x.MerenjeInfo.Timestamp)
-                        .FirstOrDefault();
+                    if(LocalStorage.Where(x => x.MerenjeInfo.IdDevice == kv.Key).Count() > 0)
+                    {
+                        lastValueForDevice = LocalStorage
+                            .Where(x => x.MerenjeInfo.IdDevice == kv.Key)
+                            .OrderByDescending(x => x.MerenjeInfo.Timestamp)
+                            .FirstOrDefault();
+                    }
                 }
 
                 if (lastValueForDevice == null)
@@ -199,7 +224,10 @@ namespace Proxy
                 ProxyMerenje localCopy = null;
                 lock (LocalStorage)
                 {
-                    localCopy = LocalStorage.Where(x => x.MerenjeInfo.IdDb == kv.Key).FirstOrDefault();
+                    if (LocalStorage.Where(x => x.MerenjeInfo.IdDb == kv.Key).Count() > 0)
+                    {
+                        localCopy = LocalStorage.Where(x => x.MerenjeInfo.IdDb == kv.Key).FirstOrDefault();
+                    }
                 }
 
                 if (localCopy == null)
@@ -235,7 +263,10 @@ namespace Proxy
                 ProxyMerenje localCopy = null;
                 lock (LocalStorage)
                 {
-                    localCopy = LocalStorage.Where(x => x.MerenjeInfo.IdDb == kv.Key).FirstOrDefault();
+                    if (LocalStorage.Where(x => x.MerenjeInfo.IdDb == kv.Key).Count() > 0)
+                    {
+                        localCopy = LocalStorage.Where(x => x.MerenjeInfo.IdDb == kv.Key).FirstOrDefault();
+                    }
                 }
 
                 if (localCopy == null)
