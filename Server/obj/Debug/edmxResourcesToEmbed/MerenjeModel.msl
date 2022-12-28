@@ -4,6 +4,7 @@
     <EntitySetMapping Name="Merenjes">
       <EntityTypeMapping TypeName="MerenjeResModel.Merenje">
         <MappingFragment StoreEntitySet="Merenje">
+          <ScalarProperty Name="idDevice" ColumnName="idDevice" />
           <ScalarProperty Name="idMerenja" ColumnName="idMerenja" />
           <ScalarProperty Name="idDb" ColumnName="idDb" />
           <ScalarProperty Name="tip" ColumnName="tip" />

@@ -12,33 +12,12 @@ namespace Device
     {
         static void Main(string[] args)
         {
-
-            Console.WriteLine("Device se digao");
-
-            const short serverPort = 1234;
-            var uri = $"net.tcp://localhost:{serverPort}/MerenjeService";
-
-            NetTcpBinding binding = new NetTcpBinding(SecurityMode.None);
-            var channel = new ChannelFactory<IWrite>(binding);
-            var endpoint = new EndpointAddress(uri);
-            var proxy = channel.CreateChannel(endpoint);
-
-            while (true)
-            {
-                Random rand = new Random();
-                Merenje merenje = new Merenje()
-                {
-                    IdMerenja = rand.Next(),
-                    IdDevice = rand.Next(),
-                    Timestamp = DateTime.Now.Ticks,
-                    Vrednost = rand.Next(20),
-                    Tip = (MerenjeTip)rand.Next(1)
-                };
-
-                proxy.writeDevice(merenje) ;
-                Task.Delay(10000).Wait();
-            }
-
+            Device device = new Device(
+                new Models.Konekcije.KlijentKonekcija<IWrite>(
+                    Models.Konekcije.Konekcija.UriServerWrite
+                )
+            );
+            device.Run();
         }
     }
 }

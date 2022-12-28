@@ -9,6 +9,7 @@
     <Property Name="vrednost" Type="float" />
     <Property Name="timestamp" Type="bigint" Nullable="false" />
     <Property Name="idMerenja" Type="bigint" />
+    <Property Name="idDevice" Type="bigint" />
   </EntityType>
   <EntityContainer Name="MerenjeResModelStoreContainer">
     <EntitySet Name="Merenje" EntityType="Self.Merenje" Schema="dbo" store:Type="Tables" />

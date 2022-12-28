@@ -11,8 +11,8 @@ namespace Proxy
     {
         List<Task> ProxyTasks = new List<Task>();
         public bool ProxyWorking = false;
-        Models.Konekcije.ServerKonekcija KonekcijaProxyAsServer = null;
-        Models.Konekcije.KlijentKonekcija KonekcijaProxyAsClient = null;
+        Models.Konekcije.ServerKonekcija<IMerenjeService> KonekcijaProxyAsServer = null;
+        Models.Konekcije.KlijentKonekcija<IServerMerenjeService> KonekcijaProxyAsClient = null;
         IProxyService ProxyService = null;
         public Proxy()
         {}
@@ -28,13 +28,13 @@ namespace Proxy
         /// </summary>
         private void StartProxyServices()
         {
-            KonekcijaProxyAsClient = new Models.Konekcije.KlijentKonekcija(
+            KonekcijaProxyAsClient = new Models.Konekcije.KlijentKonekcija<IServerMerenjeService>(
                 Models.Konekcije.Konekcija.UriServer
             );
 
             ProxyService = new ProxyService(KonekcijaProxyAsClient.Service);
 
-            KonekcijaProxyAsServer = new Models.Konekcije.ServerKonekcija(
+            KonekcijaProxyAsServer = new Models.Konekcije.ServerKonekcija<IMerenjeService>(
                 new string[] { Models.Konekcije.Konekcija.UriProxyServer }, ProxyService);
 
             ProxyTasks.Add(Task.Factory.StartNew(() => CheckRemovals()));

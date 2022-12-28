@@ -7,18 +7,17 @@ using System.Threading.Tasks;
 
 namespace Models.Konekcije
 {
-    public class KlijentKonekcija
+    public class KlijentKonekcija<T> : IKonekcija<T>
     {
         NetTcpBinding Binding { get; set; } = null;
-        ChannelFactory<IMerenjeService> Channel { get; set; } = null;
+        ChannelFactory<T> Channel { get; set; } = null;
         EndpointAddress EndpointAddress { get; set; } = null;
-        public IMerenjeService Service { get; set; } = null;
-        public KlijentKonekcija(string uri)
+        public KlijentKonekcija(string uri) : base()
         {
             try
             {
                 Binding = new NetTcpBinding(SecurityMode.None);
-                Channel = new ChannelFactory<IMerenjeService>(Binding);
+                Channel = new ChannelFactory<T>(Binding);
                 EndpointAddress = new EndpointAddress(uri);
                 Service = Channel.CreateChannel(EndpointAddress);
             }

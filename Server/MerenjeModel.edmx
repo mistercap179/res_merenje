@@ -14,6 +14,7 @@
           <Property Name="vrednost" Type="float" />
           <Property Name="timestamp" Type="bigint" Nullable="false" />
           <Property Name="idMerenja" Type="bigint" />
+          <Property Name="idDevice" Type="bigint" />
         </EntityType>
         <EntityContainer Name="MerenjeResModelStoreContainer">
           <EntitySet Name="Merenje" EntityType="Self.Merenje" Schema="dbo" store:Type="Tables" />
@@ -31,6 +32,7 @@
           <Property Name="timestamp" Type="Int64" Nullable="false" />
           <Property Name="idDb" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="idMerenja" Type="Int64" />
+          <Property Name="idDevice" Type="Int64" />
         </EntityType>
         <EntityContainer Name="MerenjeEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Merenjes" EntityType="Self.Merenje" />
@@ -44,6 +46,7 @@
           <EntitySetMapping Name="Merenjes">
             <EntityTypeMapping TypeName="MerenjeResModel.Merenje">
               <MappingFragment StoreEntitySet="Merenje">
+                <ScalarProperty Name="idDevice" ColumnName="idDevice" />
                 <ScalarProperty Name="idMerenja" ColumnName="idMerenja" />
                 <ScalarProperty Name="idDb" ColumnName="idDb" />
                 <ScalarProperty Name="tip" ColumnName="tip" />

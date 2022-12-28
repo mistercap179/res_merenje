@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Konekcije\IKonekcija.cs" />
     <Compile Include="Konekcije\KlijentKonekcija.cs" />
     <Compile Include="Konekcije\Konekcija.cs" />
     <Compile Include="Konekcije\ServerKonekcija.cs" />

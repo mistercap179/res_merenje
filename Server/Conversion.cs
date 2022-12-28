@@ -13,7 +13,9 @@ namespace Server
         {
             return new Models.Merenje()
             {
-                Id = (int)merenje.id,
+                IdDb = (int)merenje.idDb,
+                IdDevice = (int)merenje.idDevice,
+                IdMerenja = (int)merenje.idMerenja,
                 Timestamp = merenje.timestamp,
                 Tip = (MerenjeTip)merenje.tip,
                 Vrednost = (double)merenje.vrednost

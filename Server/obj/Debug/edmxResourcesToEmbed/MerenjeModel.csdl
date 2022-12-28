@@ -9,6 +9,7 @@
     <Property Name="timestamp" Type="Int64" Nullable="false" />
     <Property Name="idDb" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="idMerenja" Type="Int64" />
+    <Property Name="idDevice" Type="Int64" />
   </EntityType>
   <EntityContainer Name="MerenjeEntities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="Merenjes" EntityType="Self.Merenje" />

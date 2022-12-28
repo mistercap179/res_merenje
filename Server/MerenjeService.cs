@@ -1,5 +1,4 @@
-﻿using Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
@@ -8,169 +7,106 @@ using System.Threading.Tasks;
 
 namespace Server
 {
-
-
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
-    public class MerenjeService : IMerenjeService,IWrite
+    public class MerenjeService : Models.IServerMerenjeService, Models.IWrite
     {
-        public Conversion conversion = new Conversion();
-
-        [OperationBehavior]
-        public Models.Merenje getById(int id)
+        private Conversion conversion = new Conversion();
+        private DBCRUD.IDBCRUD crud { get; set; } = null;
+        public MerenjeService(DBCRUD.IDBCRUD crud) : base()
         {
-            Models.Merenje merenje = new Models.Merenje();
-
-            try
-            {
-                using (var db = new MerenjeEntities())
-                {
-                    merenje = conversion.ConversionMerenje(db.Merenjes.Where(x => x.idMerenja == id).FirstOrDefault());
-                }
-            }
-            catch(Exception ex)
-            {
-               Console.WriteLine(ex.Message);
-            }
-       
-            return merenje;
-
+            this.crud = crud;
         }
 
         [OperationBehavior]
-        public double getAzuriranuVrednost(int id)
+        public IDictionary<int, long> GetAllTimestampsById(int id)
         {
-            try
-            {
-                using (var db = new MerenjeEntities())
-                {
-                    Models.Merenje merenje = new Models.Merenje();
-                    double vrednost;
-                    long maxTimestamp = db.Merenjes.Where(x => x.idMerenja == id).Max(x=>x.timestamp);
-                    merenje = conversion.ConversionMerenje(db.Merenjes.Where(x => x.idMerenja == id && x.timestamp == maxTimestamp).FirstOrDefault());
-                    return vrednost = merenje.Vrednost;
-                }
-            }
-            catch(Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                return 0;
-            }
-           
+            return crud.GetAllTimestampsById(id);
         }
 
         [OperationBehavior]
-        public List<double?> getVrednosti()
+        public long GetLastTimestampById(int id)
         {
-            List<double?> listaV = new List<double?>();
-            try
+            long lastTimestamp = crud.GetLastTimestampById(id);
+            if (lastTimestamp == -1)
             {
-                using (var db = new MerenjeEntities())
-                {
-                    db.Merenjes.Select(x => x.idDevice)
-                        .ToList()
-                        .ForEach(idm => 
-                    {
-                        var val = db.Merenjes.Where(m => m.idDevice == idm)
-                                             .OrderByDescending(m => m.timestamp).FirstOrDefault();
-                        listaV.Add(val.vrednost);
-                    });
-
-                    return listaV;
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                return listaV;
+                throw new Exception("Last timestamp not found.");
             }
 
+            return lastTimestamp;
         }
 
         [OperationBehavior]
-        public List<Models.Merenje> getAnalogni()
+        public IDictionary<long, long> GetTimestampPerDevice()
         {
-<<<<<<< HEAD
-            using (var db = new MerenjeEntities())
-=======
-            List<Models.Merenje> listaA = new List<Models.Merenje>();
-            try
->>>>>>> 0cad5371c5968881bb755d3a29184c3070d1cb17
-            {
-                using (var db = new MerenjeEntities())
-                {
-                    db.Merenjes.Where(m => m.tip == ((int)MerenjeTip.ANALOGNO)).ToList()
-                           .ForEach(x =>
-                           {
-                               listaA.Add(conversion.ConversionMerenje(x));
-
-                           });
-
-                    return listaA;
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                return listaA;
-            }
+            return crud.GetTimestampPerDevice();
         }
-
 
         [OperationBehavior]
-        public List<Models.Merenje> getDigitalni()
+        public IDictionary<long, long> GetTimestampsAnalog()
         {
-            List<Models.Merenje> listaD = new List<Models.Merenje>();
+            return crud.GetTimestampsAnalog();
+        }
+
+        [OperationBehavior]
+        public IDictionary<long, long> GetTimestampsDigital()
+        {
+            return crud.GetTimestampsDigital();
+        }
+
+        [OperationBehavior]
+        public void WriteDevice(Models.Merenje merenje)
+        {
+            crud.WriteDevice(
+                new Merenje()
+                {
+                    idDevice = merenje.IdDevice,
+                    idMerenja = merenje.IdMerenja,
+                    timestamp = merenje.Timestamp,
+                    tip = (int?)merenje.Tip,
+                    vrednost = merenje.Vrednost
+                }
+            );
+        }
+        
+        [OperationBehavior]
+        public Models.Merenje GetMerenjeByDbId(int dbId)
+        {
             try
             {
-                using (var db = new MerenjeEntities())
-                {
-                    db.Merenjes.Where(m => m.tip == ((int)MerenjeTip.DIGITALNO)).ToList()
-                           .ForEach(x =>
-                           {
-                               listaD.Add(conversion.ConversionMerenje(x));
-
-                           });
-
-                    return listaD;
-                }
+                return conversion.ConversionMerenje(crud.GetMerenjeByDbId(dbId));
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                Console.WriteLine(ex.Message);
-                return listaD;
+                throw new Exception("Merenje not found");
             }
         }
 
-        public void writeDevice(Models.Merenje merenje)
+        public Models.Merenje GetLastMerenjeFromIdMerenje(int id)
         {
             try
             {
-                using (var db = new MerenjeEntities())
-                {
-                    db.Merenjes.Add(new Merenje()
-                    {
-<<<<<<< HEAD
-                        IdDb = (int)x.idDb,
-                        IdMerenja = (int)x.idMerenja,
-                        Timestamp = x.timestamp,
-                        Tip = (MerenjeTip)x.tip,
-                        Vrednost = (double)x.vrednost
-                    };
-                }).ToList();
-=======
-                        idMerenja = merenje.IdMerenja,
-                        timestamp = merenje.Timestamp,
-                        tip = (int)merenje.Tip,
-                        vrednost = merenje.Vrednost
-                    });
-                }
+                return conversion.ConversionMerenje(crud.GetLastMerenjeFromIdMerenje(id));
             }
-            catch(Exception ex)
+            catch (Exception)
             {
-                Console.WriteLine(ex.Message);
->>>>>>> 0cad5371c5968881bb755d3a29184c3070d1cb17
+                throw new Exception("Merenje not found");
             }
-
         }
+
+        [OperationBehavior]
+        public Models.Merenje GetLastForDeviceId(int id)
+        {
+            try
+            {
+                var merenje = crud.GetLastForDeviceId(id);
+                return conversion.ConversionMerenje(merenje);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                throw new Exception("Nije nadjeno merenje za uredjaj.");
+            }
+        }
+
     }
 }

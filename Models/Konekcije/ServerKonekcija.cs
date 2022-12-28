@@ -7,13 +7,12 @@ using System.Threading.Tasks;
 
 namespace Models.Konekcije
 {
-    public class ServerKonekcija
+    public class ServerKonekcija<T> : IKonekcija<T>
     {
         List<Uri> Uris = new List<Uri>();
-        IMerenjeService Service = null;
         ServiceHost Host = null;
         NetTcpBinding Binding = null;
-        public ServerKonekcija(string[] uris, IMerenjeService service)
+        public ServerKonekcija(string[] uris, T service) : base()
         {
             try
             {
@@ -25,7 +24,7 @@ namespace Models.Konekcije
                 Service = service;
                 Host = new ServiceHost(Service, Uris.ToArray());
                 Binding = new NetTcpBinding(SecurityMode.None);
-                Host.AddServiceEndpoint(typeof(IMerenjeService), Binding, "");
+                Host.AddServiceEndpoint(typeof(T), Binding, "");
                 Host.Opened += Host_Opened;
             }
             catch (Exception e)

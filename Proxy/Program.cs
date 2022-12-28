@@ -13,12 +13,9 @@ namespace Proxy
         static void Main(string[] args)
         {
             Console.WriteLine("Proxy se digao");
-
-            Models.Konekcije.KlijentKonekcija konekcija = new Models.Konekcije.KlijentKonekcija(Models.Konekcije.Konekcija.UriServer);
-            var res = konekcija.Service.GetMerenjes();
-            Console.WriteLine("Received:");
-            res.ToList().ForEach(x => Console.WriteLine(x));
-            Console.ReadLine();
+            Proxy proxy = new Proxy();
+            proxy.StartProxy();
+            
         }
     }
 }
