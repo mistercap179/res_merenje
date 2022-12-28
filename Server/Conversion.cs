@@ -9,6 +9,12 @@ namespace Server
 {
     public class Conversion
     {
+        public class ProxyLogger
+        {
+            public static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        }
+
+
         public Models.Merenje ConversionMerenje(Merenje merenje)
         {
             return new Models.Merenje()

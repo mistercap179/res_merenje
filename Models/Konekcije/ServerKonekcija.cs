@@ -12,6 +12,8 @@ namespace Models.Konekcije
         List<Uri> Uris = new List<Uri>();
         ServiceHost Host = null;
         NetTcpBinding Binding = null;
+        public override T Service { get; set; }
+
         public ServerKonekcija(string[] uris, T service) : base()
         {
             try

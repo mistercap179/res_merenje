@@ -18,3 +18,5 @@ C:\Users\marko\OneDrive\Documents\GitHub\res_merenje\Proxy\obj\Debug\Proxy.cspro
 C:\Users\marko\OneDrive\Documents\GitHub\res_merenje\Proxy\obj\Debug\Proxy.csproj.CopyComplete
 C:\Users\marko\OneDrive\Documents\GitHub\res_merenje\Proxy\obj\Debug\Proxy.exe
 C:\Users\marko\OneDrive\Documents\GitHub\res_merenje\Proxy\obj\Debug\Proxy.pdb
+C:\Users\marko\OneDrive\Documents\GitHub\res_merenje\Proxy\bin\Debug\log4net.dll
+C:\Users\marko\OneDrive\Documents\GitHub\res_merenje\Proxy\bin\Debug\log4net.xml

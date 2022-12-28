@@ -66,6 +66,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="UnitTestClient.cs" />
     <Compile Include="UnitTestServer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -73,6 +74,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Client\Client.csproj">
+      <Project>{3705eca3-ca65-4b08-8e5e-c4ff0a2d0ec0}</Project>
+      <Name>Client</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Models\Models.csproj">
       <Project>{63D658F2-4AF3-47DA-892C-D0C472704C20}</Project>
       <Name>Models</Name>

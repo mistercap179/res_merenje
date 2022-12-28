@@ -20,6 +20,7 @@ namespace Proxy
         public void StartProxy()
         {
             ProxyWorking = true;
+            ProxyLogger.log.Info("Proxy starting");
             StartProxyServices();
         }
 
@@ -31,17 +32,23 @@ namespace Proxy
             KonekcijaProxyAsClient = new Models.Konekcije.KlijentKonekcija<IServerMerenjeService>(
                 Models.Konekcije.Konekcija.UriServer
             );
+            ProxyLogger.log.Info("Proxy connection with server established starting");
 
             ProxyService = new ProxyService(KonekcijaProxyAsClient.Service);
 
             KonekcijaProxyAsServer = new Models.Konekcije.ServerKonekcija<IMerenjeService>(
                 new string[] { Models.Konekcije.Konekcija.UriProxyServer }, ProxyService);
 
+
             ProxyTasks.Add(Task.Factory.StartNew(() => CheckRemovals()));
+            ProxyLogger.log.Info("Proxy started automatic clearing of local storage.");
             KonekcijaProxyAsServer.Open();
+            ProxyLogger.log.Info("Proxy opened connection for clients.");
+
             Console.ReadLine();
             ProxyWorking = false;
             Task.WaitAll(ProxyTasks.ToArray());
+            ProxyLogger.log.Info("Proxy finished.");
         }
 
         /// <summary>
@@ -54,6 +61,7 @@ namespace Proxy
             while (ProxyWorking)
             {
                 ProxyService.CheckRemovals();
+                ProxyLogger.log.Info("Proxy removed instaces that are older than 1 day");
                 Task.Delay(secondsToSleep * 1000).Wait();
             }
         }
