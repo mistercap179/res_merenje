@@ -26,3 +26,5 @@ C:\Users\marko\OneDrive\Documents\GitHub\res_merenje\Server\obj\Debug\Server.csp
 C:\Users\marko\OneDrive\Documents\GitHub\res_merenje\Server\obj\Debug\Server.csproj.CopyComplete
 C:\Users\marko\OneDrive\Documents\GitHub\res_merenje\Server\obj\Debug\Server.exe
 C:\Users\marko\OneDrive\Documents\GitHub\res_merenje\Server\obj\Debug\Server.pdb
+C:\Users\marko\OneDrive\Documents\GitHub\res_merenje\Server\bin\Debug\log4net.dll
+C:\Users\marko\OneDrive\Documents\GitHub\res_merenje\Server\bin\Debug\log4net.xml

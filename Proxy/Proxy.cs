@@ -38,6 +38,8 @@ namespace Proxy
         public void StartProxy()
         {
             ProxyWorking = true;
+            ProxyLogger.log.Info("Proxy starting");
+            
         }
 
         /// <summary>
@@ -45,11 +47,18 @@ namespace Proxy
         /// </summary>
         public void StartProxyServices()
         {
+            ProxyLogger.log.Info("Proxy connection with server established starting");
+
             ProxyTasks.Add(Task.Factory.StartNew(() => CheckRemovals()));
+            ProxyLogger.log.Info("Proxy started automatic clearing of local storage.");
             KonekcijaProxyAsServer.Open();
             Input.ReadLine();
+            ProxyLogger.log.Info("Proxy opened connection for clients.");
+
+            
             ProxyWorking = false;
             Task.WaitAll(ProxyTasks.ToArray());
+            ProxyLogger.log.Info("Proxy finished.");
         }
     
         public int secondsToSleep { get; set; } = 10;
@@ -63,6 +72,7 @@ namespace Proxy
             while (ProxyWorking)
             {
                 ProxyService.CheckRemovals();
+                ProxyLogger.log.Info("Proxy removed instaces that are older than 1 day");
                 Task.Delay(secondsToSleep * 1000).Wait();
             }
         }

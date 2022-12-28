@@ -6,13 +6,22 @@ using System.Threading.Tasks;
 
 namespace Client
 {
-    class Klijent
+    public class KlijentInput
+    {
+        public virtual string ReadLine()
+        {
+            return Console.ReadLine();
+        }
+    }
+
+    public class Klijent
     {
         Models.Konekcije.IKonekcija<Models.IMerenjeService> klijent = null;
-
-        public Klijent(Models.Konekcije.IKonekcija<Models.IMerenjeService> konekcija)
+        KlijentInput input = null;
+        public Klijent(Models.Konekcije.IKonekcija<Models.IMerenjeService> konekcija, KlijentInput klijentInput)
         {
             klijent = konekcija;
+            input = klijentInput;
         }
 
         public void Run()
@@ -28,50 +37,69 @@ namespace Client
                 Console.WriteLine("\t5 - Svi podaci digitalnih merenja");
                 Console.WriteLine("\t6 - Izadji");
                 Console.Write("Tvoja opcija je? ");
-                res = Convert.ToInt32(Console.ReadLine());
+                res = Convert.ToInt32(input.ReadLine());
                 // Use a switch statement to do the math.
-                switch (res)
-                {
-                    case 1:
-                        {
-                            Console.WriteLine("Unesi ID:");
-                            int id = Convert.ToInt32(Console.ReadLine());
-                            var results = klijent.Service.GetAllById(id);
-                            Console.WriteLine("Rezultati:");
-                            results.ToList().ForEach(x => Console.WriteLine(x));
-                            break;
-                        }
-                    case 2:
-                        {
-                            Console.WriteLine("Unesi ID:");
-                            int id = Convert.ToInt32(Console.ReadLine());
-                            var result = klijent.Service.GetAzuriranuVrednost(id);
-                            Console.WriteLine($"Azurirana vrednost:{result}");
-                            break;
-                        }
-                    case 3:
-                        {
-                            Console.WriteLine("Rezultati:");
-                            var results = klijent.Service.GetAzuriraneVrednostiUredjaja();
-                            results.ToList().ForEach(x => Console.WriteLine(x));
-                            break;
-                        }
-                    case 4:
-                        {
-                            Console.WriteLine("Rezultati:");
-                            var results = klijent.Service.GetAnalogni();
-                            results.ToList().ForEach(x => Console.WriteLine(x));
-                            break;
-                        }
-                    case 5:
-                        {
-                            Console.WriteLine("Rezultati:");
-                            var results = klijent.Service.GetDigitalni();
-                            results.ToList().ForEach(x => Console.WriteLine(x));
-                            break;
-                        }
-                }
+                provera(res);
             }
         }
+
+
+        public void provera(int br)
+        {
+            switch (br)
+            {
+                case 1:
+                    {
+                        Console.WriteLine("Unesi ID:");
+                        int id = Convert.ToInt32(input.ReadLine());
+                        var results = klijent.Service.GetAllById(id);
+                        Console.WriteLine("Rezultati:");
+                        results.ToList().ForEach(x => Console.WriteLine(x));
+                        break;
+                    }
+                case 2:
+                    {
+                        Console.WriteLine("Unesi ID:");
+                        int id = Convert.ToInt32(input.ReadLine());
+                        var result = klijent.Service.GetAzuriranuVrednost(id);
+                        Console.WriteLine($"Azurirana vrednost:{result}");
+                        break;
+                    }
+                case 3:
+                    {
+                        Console.WriteLine("Rezultati:");
+                        var results = klijent.Service.GetAzuriraneVrednostiUredjaja();
+                        results.ToList().ForEach(x => Console.WriteLine(x));
+                        break;
+                    }
+                case 4:
+                    {
+                        Console.WriteLine("Rezultati:");
+                        var results = klijent.Service.GetAnalogni();
+                        results.ToList().ForEach(x => Console.WriteLine(x));
+                        break;
+                    }
+                case 5:
+                    {
+                        Console.WriteLine("Rezultati:");
+                        var results = klijent.Service.GetDigitalni();
+                        results.ToList().ForEach(x => Console.WriteLine(x));
+                        break;
+                    }
+                case 6:
+                    {
+                        break;
+                    }
+                default:
+                    {
+                        throw new Exception("Niste izabrali nijednu od opcija. Ponovno biranje.");
+                    }
+                    
+            }
+        }
+
+
+
+
     }
 }

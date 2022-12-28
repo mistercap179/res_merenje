@@ -13,6 +13,8 @@ namespace Models.Konekcije
         ChannelFactory<T> Channel { get; set; } = null;
         EndpointAddress EndpointAddress { get; set; } = null;
         public KlijentKonekcija(): base() { }
+        public override T Service { get ; set ; }
+
         public KlijentKonekcija(string uri) : base()
         {
             try

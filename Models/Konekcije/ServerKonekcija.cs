@@ -12,7 +12,12 @@ namespace Models.Konekcije
         List<Uri> Uris = new List<Uri>();
         ServiceHost Host = null;
         NetTcpBinding Binding = null;
+<<<<<<< HEAD
         public ServerKonekcija() : base() { }
+=======
+        public override T Service { get; set; }
+
+>>>>>>> d3a0dc44ac17c286dbba772850af0a14b3a0eaa5
         public ServerKonekcija(string[] uris, T service) : base()
         {
             try

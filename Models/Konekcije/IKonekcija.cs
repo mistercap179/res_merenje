@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Models.Konekcije
 {
-    public class IKonekcija<T>
+    public abstract class IKonekcija<T>
     {
-        public T Service { get; set; }
+        public abstract T Service { get; set; }
     }
 }

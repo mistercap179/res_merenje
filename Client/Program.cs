@@ -13,7 +13,8 @@ namespace Client
             Klijent klijent = new Klijent(
                 new Models.Konekcije.KlijentKonekcija<Models.IMerenjeService>(
                     Models.Konekcije.Konekcija.UriProxyServer
-                )
+                ),
+                new KlijentInput()
             );
             klijent.Run();
         }

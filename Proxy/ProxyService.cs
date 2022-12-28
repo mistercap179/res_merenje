@@ -46,6 +46,7 @@ namespace Proxy
         [OperationBehavior]
         public void CheckRemovals()
         {
+            ProxyLogger.log.Info("Trying to remove instances that are older than 1 day in proxy service.");
             lock (LocalStorage)
             {
                 LocalStorage.RemoveAll(x => x.PoslednjiPutProcitano.CompareTo(DateTime.Now.AddDays(-1)) < 0);
@@ -54,6 +55,7 @@ namespace Proxy
 
         public void UpdateLocalStorageWithNewMerenje(Models.Merenje merenje)
         {
+            ProxyLogger.log.Info($"Proxy service updating local storage with new merenje:{merenje}");
             lock (LocalStorage)
             {
                 LocalStorage.RemoveAll(x => x.MerenjeInfo.IdDb == merenje.IdDb);
@@ -70,6 +72,7 @@ namespace Proxy
         public ICollection<Merenje> GetAllById(int id)
         {
             var lastUpdatedForId = ServerService.GetAllTimestampsById(id);
+            ProxyLogger.log.Info($"Proxy retreived timestamps from server for merenje id: {id}");
 
             List<Merenje> retVal = new List<Merenje>();
             
@@ -89,6 +92,7 @@ namespace Proxy
                     // local copy exists but it's not up to date
                     if (local.PoslednjiPutDobavljeno.Ticks < kv.Value)
                     {
+                        ProxyLogger.log.Info($"Proxy's merenje:{local} is NOT up to date, retreiving new one from server.");
                         // but it's not up to date
                         var newMerenje = GetMerenjeByDbId(kv.Key);
                         UpdateLocalStorageWithNewMerenje(newMerenje);
@@ -97,11 +101,13 @@ namespace Proxy
                     // local copy exists and it's up to date
                     else
                     {
+                        ProxyLogger.log.Info($"Proxy's merenje:{local} is up to date.");
                         retVal.Add(local.MerenjeInfo);
                     }
                 }
                 else
                 {
+                    ProxyLogger.log.Info($"Proxy's doesn't have local copy, retreivin new one from server.");
                     // get new object from db with current iddb 
                     var newMerenje = GetMerenjeByDbId(kv.Key);
                     UpdateLocalStorageWithNewMerenje(newMerenje);
@@ -123,6 +129,8 @@ namespace Proxy
         {
             try
             {
+                ProxyLogger.log.Info($"Proxy's retreiveing up to date version for:{id}.");
+
                 ProxyMerenje localLastInstance = null;
                 lock (LocalStorage)
                 {
@@ -140,12 +148,14 @@ namespace Proxy
                     var dbLasttimestamp = ServerService.GetLastTimestampById(id);
                     if (localLastInstance.MerenjeInfo.Timestamp < dbLasttimestamp)
                     {
+                        ProxyLogger.log.Info($"Proxy's merenje:{localLastInstance} is NOT up to date, retreiving new one from server.");
                         var newMerenje = GetMerenjeByDbId(localLastInstance.MerenjeInfo.IdDb);
                         UpdateLocalStorageWithNewMerenje(newMerenje);
                         return newMerenje.Vrednost;
                     }
                     else
                     {
+                        ProxyLogger.log.Info($"Proxy's merenje:{localLastInstance} is up to date.");
                         // we have the same value
                         return localLastInstance.MerenjeInfo.Vrednost;
                     }
@@ -154,6 +164,7 @@ namespace Proxy
                 {
                     // TO DO: Get Last merenje object by id
                     var newMerenje = ServerService.GetLastMerenjeFromIdMerenje(id);
+                    ProxyLogger.log.Info($"Proxy's doesn't have local copy, retreivin new one from server.");
                     UpdateLocalStorageWithNewMerenje(newMerenje);
                     // we need new value from db
                     return newMerenje.Vrednost;
@@ -162,6 +173,7 @@ namespace Proxy
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
+                ProxyLogger.log.Error("Error occured in proxy service", e);
                 throw e;
             }
         }
@@ -191,6 +203,8 @@ namespace Proxy
                 {
                     // new value from db
                     // get whole value from db not just number
+
+                    ProxyLogger.log.Info($"Proxy's doesn't have local copy, retreivin new one from server.");
                     var newValueForDevice = ServerService.GetLastForDeviceId((int)kv.Key);
                     values.Add(newValueForDevice.Vrednost);
                     UpdateLocalStorageWithNewMerenje(newValueForDevice);
@@ -198,13 +212,16 @@ namespace Proxy
                 else if (lastValueForDevice.MerenjeInfo.Timestamp < kv.Value)
                 {
                     // new value from db
+                    ProxyLogger.log.Info($"Proxy's merenje:{lastValueForDevice} is NOT up to date, retreiving new one from server.");
+
                     var newMerenje = ServerService.GetMerenjeByDbId(lastValueForDevice.MerenjeInfo.IdDb);
                     UpdateLocalStorageWithNewMerenje(newMerenje);
                     values.Add(newMerenje.Vrednost);
                 }
                 else
                 {
-                    // return current value
+                    // return current valueProxy
+                    ProxyLogger.log.Info($"Proxy's merenje:{lastValueForDevice} is up to date.");
                     values.Add(lastValueForDevice.MerenjeInfo.Vrednost);
                 }
             }
@@ -232,18 +249,24 @@ namespace Proxy
 
                 if (localCopy == null)
                 {
+
+                    ProxyLogger.log.Info($"Proxy's doesn't have local copy, retreivin new one from server.");
                     var newMerenje = GetMerenjeByDbId((int)kv.Key);
                     UpdateLocalStorageWithNewMerenje(newMerenje);
                     merenja.Add(newMerenje);
                 }
                 else if (localCopy.MerenjeInfo.Timestamp < kv.Value)
                 {
+                    ProxyLogger.log.Info($"Proxy's merenje:{localCopy} is NOT up to date, retreiving new one from server.");
+
                     var newMerenje = GetMerenjeByDbId((int)kv.Key);
                     UpdateLocalStorageWithNewMerenje(newMerenje);
                     merenja.Add(newMerenje);
                 }
                 else
                 {
+                    ProxyLogger.log.Info($"Proxy's merenje:{localCopy} is up to date.");
+
                     merenja.Add(localCopy.MerenjeInfo);
                 }
             }
@@ -271,18 +294,24 @@ namespace Proxy
 
                 if (localCopy == null)
                 {
+                    ProxyLogger.log.Info($"Proxy's doesn't have local copy, retreivin new one from server.");
+
                     var newMerenje = GetMerenjeByDbId((int)kv.Key);
                     UpdateLocalStorageWithNewMerenje(newMerenje);
                     merenja.Add(newMerenje);
                 }
                 else if (localCopy.MerenjeInfo.Timestamp < kv.Value)
                 {
+                    ProxyLogger.log.Info($"Proxy's merenje:{localCopy} is NOT up to date, retreiving new one from server.");
+
                     var newMerenje = GetMerenjeByDbId((int)kv.Key);
                     UpdateLocalStorageWithNewMerenje(newMerenje);
                     merenja.Add(newMerenje);
                 }
                 else
                 {
+                    ProxyLogger.log.Info($"Proxy's merenje:{localCopy} is up to date.");
+
                     merenja.Add(localCopy.MerenjeInfo);
                 }
             }
