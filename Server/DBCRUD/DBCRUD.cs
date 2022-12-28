@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Server.DBCRUD
 {
+    [ExcludeFromCodeCoverage]
+
     public class DBCRUD : IDBCRUD
     {
         public IDictionary<int, long> GetAllTimestampsById(int id)

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.ServiceModel;
 using System.Text;
@@ -7,6 +8,8 @@ using System.Threading.Tasks;
 
 namespace Models.Konekcije
 {
+    [ExcludeFromCodeCoverage]
+
     public class ServerKonekcija<T> : IKonekcija<T>
     {
         List<Uri> Uris = new List<Uri>();

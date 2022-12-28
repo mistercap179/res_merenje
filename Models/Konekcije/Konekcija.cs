@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Models.Konekcije
 {
+    [ExcludeFromCodeCoverage]
     public class Konekcija
     {
         public static short ServerPort { get; set; } = 12341;

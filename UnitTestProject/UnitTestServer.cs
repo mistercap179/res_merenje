@@ -185,6 +185,8 @@ namespace UnitTestProject
                 vrednost = 2.25
             };
 
+            serverService.WriteDevice(conversion.ConversionMerenje(merenje2));
+
             mockCrud.Setup(x => x.WriteDevice(merenje2));
             mockCrud.Setup(x => x.GetLastTimestampById((int)merenje2.idMerenja)).Returns(null);
 

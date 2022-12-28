@@ -66,11 +66,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-<<<<<<< HEAD
     <Compile Include="ProxyTesting.cs" />
-=======
     <Compile Include="UnitTestClient.cs" />
->>>>>>> d3a0dc44ac17c286dbba772850af0a14b3a0eaa5
     <Compile Include="UnitTestServer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -78,15 +75,13 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-<<<<<<< HEAD
     <ProjectReference Include="..\Device\Device.csproj">
       <Project>{f25ab900-d882-4e80-a9c6-cc7a4b6e81c1}</Project>
       <Name>Device</Name>
-=======
-    <ProjectReference Include="..\Client\Client.csproj">
+	</ProjectReference>
+	<ProjectReference Include="..\Client\Client.csproj">
       <Project>{3705eca3-ca65-4b08-8e5e-c4ff0a2d0ec0}</Project>
       <Name>Client</Name>
->>>>>>> d3a0dc44ac17c286dbba772850af0a14b3a0eaa5
     </ProjectReference>
     <ProjectReference Include="..\Models\Models.csproj">
       <Project>{63D658F2-4AF3-47DA-892C-D0C472704C20}</Project>
