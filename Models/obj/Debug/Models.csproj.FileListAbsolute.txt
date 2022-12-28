@@ -4,3 +4,9 @@ D:\res_merenje\res_merenje\Models\obj\Debug\Models.csprojAssemblyReference.cache
 D:\res_merenje\res_merenje\Models\obj\Debug\Models.csproj.CoreCompileInputs.cache
 D:\res_merenje\res_merenje\Models\obj\Debug\Models.dll
 D:\res_merenje\res_merenje\Models\obj\Debug\Models.pdb
+C:\Users\marko\OneDrive\Documents\GitHub\res_merenje\Models\bin\Debug\Models.dll
+C:\Users\marko\OneDrive\Documents\GitHub\res_merenje\Models\bin\Debug\Models.pdb
+C:\Users\marko\OneDrive\Documents\GitHub\res_merenje\Models\obj\Debug\Models.csproj.AssemblyReference.cache
+C:\Users\marko\OneDrive\Documents\GitHub\res_merenje\Models\obj\Debug\Models.csproj.CoreCompileInputs.cache
+C:\Users\marko\OneDrive\Documents\GitHub\res_merenje\Models\obj\Debug\Models.dll
+C:\Users\marko\OneDrive\Documents\GitHub\res_merenje\Models\obj\Debug\Models.pdb
