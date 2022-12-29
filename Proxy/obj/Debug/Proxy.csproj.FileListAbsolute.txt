@@ -1,13 +1,3 @@
-D:\res_merenje\res_merenje\Proxy\bin\Debug\Proxy.exe.config
-D:\res_merenje\res_merenje\Proxy\bin\Debug\Proxy.exe
-D:\res_merenje\res_merenje\Proxy\bin\Debug\Proxy.pdb
-D:\res_merenje\res_merenje\Proxy\bin\Debug\Models.dll
-D:\res_merenje\res_merenje\Proxy\bin\Debug\Models.pdb
-D:\res_merenje\res_merenje\Proxy\obj\Debug\Proxy.csprojAssemblyReference.cache
-D:\res_merenje\res_merenje\Proxy\obj\Debug\Proxy.csproj.CoreCompileInputs.cache
-D:\res_merenje\res_merenje\Proxy\obj\Debug\Proxy.csproj.CopyComplete
-D:\res_merenje\res_merenje\Proxy\obj\Debug\Proxy.exe
-D:\res_merenje\res_merenje\Proxy\obj\Debug\Proxy.pdb
 C:\Users\marko\OneDrive\Documents\GitHub\res_merenje\Proxy\bin\Debug\Proxy.exe.config
 C:\Users\marko\OneDrive\Documents\GitHub\res_merenje\Proxy\bin\Debug\Proxy.exe
 C:\Users\marko\OneDrive\Documents\GitHub\res_merenje\Proxy\bin\Debug\Proxy.pdb
@@ -20,5 +10,3 @@ C:\Users\marko\OneDrive\Documents\GitHub\res_merenje\Proxy\obj\Debug\Proxy.exe
 C:\Users\marko\OneDrive\Documents\GitHub\res_merenje\Proxy\obj\Debug\Proxy.pdb
 C:\Users\marko\OneDrive\Documents\GitHub\res_merenje\Proxy\bin\Debug\log4net.dll
 C:\Users\marko\OneDrive\Documents\GitHub\res_merenje\Proxy\bin\Debug\log4net.xml
-D:\res_merenje\res_merenje\Proxy\bin\Debug\log4net.dll
-D:\res_merenje\res_merenje\Proxy\bin\Debug\log4net.xml
